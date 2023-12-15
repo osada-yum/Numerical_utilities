@@ -28,8 +28,8 @@ program test_kahan_summation_variance_norm
      summ_k = summ_k%add(arr(i))
      summ_k2 = summ_k2%add(arr(i) ** 2)
   end do
-  summ_kahan_sum = kahan_sum(arr)
-  summ_kahan_sum2 = kahan_sum(arr ** 2)
+  summ_kahan_sum = kahan_babushka_sum(arr)
+  summ_kahan_sum2 = kahan_babushka_sum(arr ** 2)
 
   summ_diff = 0.0_real64
   summ_diff_k = kahan_summation(0.0_real64)
@@ -38,23 +38,23 @@ program test_kahan_summation_variance_norm
        summ_diff = summ_diff + (arr(i) - mean) ** 2
        summ_diff_k = summ_diff_k%add((arr(i) - mean_k) ** 2)
     end do
-    summ_diff_kahan_sum = kahan_sum((arr(:) - mean_summ_kahan_sum) ** 2)
-    write(error_unit, '(a)') "[test_kahan_summation_variance_norm]"
-    write(error_unit, '(a)') " [simple variance]"
-    write(error_unit, '(g0)') abs(summ2 / n - (summ / n) ** 2 - exact_var)
-    write(error_unit, '(g0)') abs((summ2 * n - summ ** 2) / n ** 2 - exact_var)
-    write(error_unit, '(g0)') abs(summ_diff / n - exact_var)
-    write(error_unit, '(a)') " [kahan variance]"
-    write(error_unit, '(g0)') abs(summ_k2%val() / n - (summ_k%val() / n) ** 2 - exact_var)
-    write(error_unit, '(g0)') abs((summ_k2%val() * n - summ_k%val() ** 2) / n ** 2 - exact_var)
-    write(error_unit, '(g0)') abs(summ_diff_k%val() / n - exact_var)
-    write(error_unit, '(a)') " [kahan_sum variance]"
-    write(error_unit, '(g0)') abs(summ_kahan_sum2 / n - (summ_kahan_sum / n) ** 2 - exact_var)
-    write(error_unit, '(g0)') abs((summ_kahan_sum2 * n - summ_kahan_sum ** 2) / n ** 2 - exact_var)
-    write(error_unit, '(g0)') abs(summ_diff_kahan_sum / n - exact_var)
-    write(error_unit, '(a)') "[test_kahan_summation_mean_norm]"
-    write(error_unit, '(g0)') abs(mean - exact_mean)
-    write(error_unit, '(g0)') abs(mean_k - exact_mean)
-    write(error_unit, '(g0)') abs(mean_summ_kahan_sum - exact_mean)
+    summ_diff_kahan_sum = kahan_babushka_sum((arr(:) - mean_summ_kahan_sum) ** 2)
+    ! write(error_unit, '(a)') "[test_kahan_summation_variance_norm]"
+    ! write(error_unit, '(a)') " [simple variance]"
+    ! write(error_unit, '(g0)') abs(summ2 / n - (summ / n) ** 2 - exact_var)
+    ! write(error_unit, '(g0)') abs((summ2 * n - summ ** 2) / n ** 2 - exact_var)
+    ! write(error_unit, '(g0)') abs(summ_diff / n - exact_var)
+    ! write(error_unit, '(a)') " [kahan variance]"
+    ! write(error_unit, '(g0)') abs(summ_k2%val() / n - (summ_k%val() / n) ** 2 - exact_var)
+    ! write(error_unit, '(g0)') abs((summ_k2%val() * n - summ_k%val() ** 2) / n ** 2 - exact_var)
+    ! write(error_unit, '(g0)') abs(summ_diff_k%val() / n - exact_var)
+    ! write(error_unit, '(a)') " [kahan_babushka_sum variance]"
+    ! write(error_unit, '(g0)') abs(summ_kahan_sum2 / n - (summ_kahan_sum / n) ** 2 - exact_var)
+    ! write(error_unit, '(g0)') abs((summ_kahan_sum2 * n - summ_kahan_sum ** 2) / n ** 2 - exact_var)
+    ! write(error_unit, '(g0)') abs(summ_diff_kahan_sum / n - exact_var)
+    ! write(error_unit, '(a)') "[test_kahan_summation_mean_norm]"
+    ! write(error_unit, '(g0)') abs(mean - exact_mean)
+    ! write(error_unit, '(g0)') abs(mean_k - exact_mean)
+    ! write(error_unit, '(g0)') abs(mean_summ_kahan_sum - exact_mean)
   end associate
 end program test_kahan_summation_variance_norm
