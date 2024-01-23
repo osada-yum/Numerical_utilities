@@ -1,11 +1,11 @@
 name = "numeric_simulation"
 version = "0.1.0"
-license = "license"
+license = "GPL-3.0"
 author = "osada-yum"
 maintainer = "osada.yum@gmail.com"
 copyright = "Copyright 2023, osada-yum"
 [build]
-auto-executables = true
+auto-executables = false
 auto-tests = true
 auto-examples = true
 module-naming = false
