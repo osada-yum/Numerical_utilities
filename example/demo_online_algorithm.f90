@@ -15,7 +15,7 @@ program test_online_variance
   o_var = online_variance(arr)
   do i = 1, n - 1
      call o_cov%add_pair(arr(i), arr2(i))
-     write(output_unit, '(a15, 2(g0, 1x))') "sample_covar: ", i, o_cov%sample_covar()
+     ! write(output_unit, '(a15, 2(g0, 1x))') "sample_covar: ", i, o_cov%sample_covar()
   end do
   write(error_unit, '(a)') "[test_online_variance]"
   write(error_unit, '(g0)') abs(o_var%mean() - exact_mean)
