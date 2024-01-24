@@ -17,8 +17,8 @@ module online_variance_covariance_m
      procedure, pass :: sample_var1 => sample_var1_ovc
      procedure, pass :: var2 => var2_ovc
      procedure, pass :: sample_var2 => sample_var2_ovc
-     procedure, pass :: covar => covar_ovc
-     procedure, pass :: sample_covar => sample_covar_ovc
+     procedure, pass :: cov => cov_ovc
+     procedure, pass :: sample_cov => sample_cov_ovc
   end type online_variance_covariance
   interface online_variance_covariance
      module procedure :: generate_online_variance_covariance
@@ -70,12 +70,12 @@ contains
     class(online_variance_covariance), intent(in) :: this
     res = this%m2_2_ / (this%cnts_ - 1)
   end function sample_var2_ovc
-  pure real(real64) function covar_ovc(this) result(res)
+  pure real(real64) function cov_ovc(this) result(res)
     class(online_variance_covariance), intent(in) :: this
     res = this%c_ / this%cnts_
-  end function covar_ovc
-  pure real(real64) function sample_covar_ovc(this) result(res)
+  end function cov_ovc
+  pure real(real64) function sample_cov_ovc(this) result(res)
     class(online_variance_covariance), intent(in) :: this
     res = this%c_ / (this%cnts_ - 1)
-  end function sample_covar_ovc
+  end function sample_cov_ovc
 end module online_variance_covariance_m
