@@ -3,7 +3,8 @@ program demo_variance_covariance_kahan_m
   use kahan_summation_m
   use variance_covariance_kahan_m
   implicit none
-  real(real64), parameter :: exact_mean = 0.5_real64, exact_var = 1.0_real64 / 12, exact_covar = 0.0_real64
+  real(real64), parameter :: exact_mean = 0.5_real64, exact_square_mean = 1.0_real64 / 3, &
+       & exact_var = 1.0_real64 / 12, exact_covar = 0.0_real64
   integer(int32), parameter :: n = 10000000
   real(real64), allocatable :: arr(:), arr2(:)
   type(variance_covariance_kahan) :: var_cov
@@ -16,10 +17,12 @@ program demo_variance_covariance_kahan_m
      call var_cov%add_data(arr(i), arr2(i))
   end do
   write(error_unit, '(a)') "[demo_variance_covariance_kahan]"
-  associate(mean => sum(arr) / n)
+  associate(mean => sum(arr) / n, square_mean => sum(arr ** 2) / n)
     write(error_unit, '(a)') "mean of arr: "
-    write(error_unit, '(g0)') abs(var_cov%mean1() - exact_mean)
+    write(error_unit, '(*(g0, 1x))') var_cov%mean1(), abs(var_cov%mean1() - exact_mean)
     write(error_unit, '(*(g0, 1x))') abs(mean - exact_mean), abs(var_cov%mean1() - mean)
+    write(error_unit, '(*(g0, 1x))') var_cov%square_mean1(), abs(var_cov%square_mean1() - exact_square_mean)
+    write(error_unit, '(*(g0, 1x))') abs(square_mean - exact_square_mean), abs(var_cov%square_mean1() - square_mean)
     associate(var => sum((arr(:) - sum(arr) / n) ** 2) / n, square_mean => sum(arr(:) ** 2) / n)
       write(error_unit, '(a)') "var of arr: "
       write(error_unit, '(g0)') abs(var_cov%var1() - exact_var)
