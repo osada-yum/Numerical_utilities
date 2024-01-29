@@ -58,4 +58,16 @@ program demo_variance_covariance_kahan_m
     write(error_unit, '(*(g0, 1x))') abs(cov_another - exact_covar), abs(var_cov%cov() - cov_another)
     write(error_unit, '(a15, g0)') "sample_cov: ", abs(var_cov%sample_cov() - exact_covar)
   end associate
+  block
+    type(variance_covariance_kahan) :: other, other2
+    other = variance_covariance_kahan(var_cov%num_sample(), &
+         & var_cov%v1(), var_cov%v2(), &
+         & var_cov%v1_square(), var_cov%v2_square(), &
+         & var_cov%v1v2())
+    other2 = other
+    write(error_unit, '(a)') "[demo_copy]"
+    write(error_unit, '(g0)') abs(var_cov%cov() - other%cov())
+    call other2%merge_data(var_cov)
+    write(error_unit, '(g0)') abs(var_cov%cov() - other2%cov())
+  end block
 end program demo_variance_covariance_kahan_m
