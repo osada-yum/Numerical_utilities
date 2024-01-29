@@ -14,6 +14,8 @@ module variance_covariance_kahan_m
      procedure, pass :: add_data => add_data_vck
      procedure, pass :: mean1 => mean1_vck
      procedure, pass :: mean2 => mean2_vck
+     procedure, pass :: square_mean1 => square_mean1_vck
+     procedure, pass :: square_mean2 => square_mean2_vck
      procedure, pass :: var1 => var1_vck
      procedure, pass :: sample_var1 => sample_var1_vck
      procedure, pass :: var2 => var2_vck
@@ -51,6 +53,14 @@ contains
     class(variance_covariance_kahan), intent(in) :: this
     res = this%v2_%val() / this%n_
   end function mean2_vck
+  pure real(real64) function square_mean1_vck(this) result(res)
+    class(variance_covariance_kahan), intent(in) :: this
+    res = this%v1_square_%val() / this%n_
+  end function square_mean1_vck
+  pure real(real64) function square_mean2_vck(this) result(res)
+    class(variance_covariance_kahan), intent(in) :: this
+    res = this%v2_square_%val() / this%n_
+  end function square_mean2_vck
   !> <v^2> - <v>^2
   !> == sum(v^2) / n - (sum(v) / n)^2
   !> == sum(v^2) / n - sum(v)^2 / n^2
