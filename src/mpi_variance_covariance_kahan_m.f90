@@ -1,6 +1,6 @@
 module mpi_variance_covariance_kahan_m
   use, intrinsic :: iso_fortran_env
-  use mpi_f08
+  use mpi
   use kahan_summation_m
   use variance_covariance_kahan_m
   implicit none

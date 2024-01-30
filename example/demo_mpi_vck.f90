@@ -1,6 +1,6 @@
 program demo_mpi_vck
   use, intrinsic :: iso_fortran_env
-  use mpi_f08
+  use mpi
   use variance_covariance_kahan_m
   use mpi_variance_covariance_kahan_m
   implicit none

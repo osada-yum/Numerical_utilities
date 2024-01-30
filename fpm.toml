@@ -9,7 +9,7 @@ auto-executables = false
 auto-tests = true
 auto-examples = true
 module-naming = false
-external-modules = ["mpi_f08"]
+external-modules = ["mpi"]
 [install]
 library = true
 [fortran]
