@@ -5,7 +5,7 @@ Items for numerical simulation implemented by Fortran.
 Collect the algorithms for numerical computation.
 
 ## Usage
-If you use fpm(Fortran package manager)[https://github.com/fortran-lang/fpm],
+If you use fpm[Fortran package manager](https://github.com/fortran-lang/fpm),
 add
 ```
     [dependencies]
@@ -13,7 +13,7 @@ add
 ```
 to your `fpm.toml`.
 
-See `demo/demo_variance_covariance_kahan.f90` to understand usage of fortran modules.
+See `example/demo_variance_covariance_kahan.f90` to understand usage of fortran modules.
 
 # TODO
 
