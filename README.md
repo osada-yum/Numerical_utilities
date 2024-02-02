@@ -18,7 +18,7 @@ See `example/demo_variance_covariance_kahan.f90` to understand usage of fortran 
 # TODO
 
 ## Algorithm for correction to numerical error
-[x] Kahan summation algorithm
-[x] One-pass algorithm for variance and covariance computed by the Kahan summation algorithm
-  [x] MPI subroutine for user-defined-type
-[x] Welford's online algorithm
+- [x] Kahan summation algorithm
+- [x] One-pass algorithm for variance and covariance computed by the Kahan summation algorithm
+  - [x] MPI subroutine for user-defined-type
+- [x] Welford's online algorithm
