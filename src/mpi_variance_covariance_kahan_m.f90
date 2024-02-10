@@ -10,16 +10,16 @@ contains
     type(variance_covariance_kahan), intent(inout) :: res_vck
     integer(int32), intent(in) :: root, myrank, num_proc
     integer(int32), intent(out), optional :: ierr
-    integer(int64) :: n(num_proc)
+    integer(int64) :: num_sample(num_proc)
     real(real64) :: v1(num_proc), v2(num_proc), v1_square(num_proc), v2_square(num_proc), v1v2(num_proc)
     integer(int32) :: i
     integer(int32) :: err(6)
-    call MPI_Gather(send_vck%num_sample(), 1, MPI_INTEGER8, n(1),         1, MPI_INTEGER8, root, MPI_COMM_WORLD, err(1))
-    call MPI_Gather(send_vck%v1(),         1, MPI_REAL8,    v1(1),        1, MPI_REAL8,    root, MPI_COMM_WORLD, err(2))
-    call MPI_Gather(send_vck%v2(),         1, MPI_REAL8,    v2(1),        1, MPI_REAL8,    root, MPI_COMM_WORLD, err(3))
-    call MPI_Gather(send_vck%v1_square(),  1, MPI_REAL8,    v1_square(1), 1, MPI_REAL8,    root, MPI_COMM_WORLD, err(4))
-    call MPI_Gather(send_vck%v2_square(),  1, MPI_REAL8,    v2_square(1), 1, MPI_REAL8,    root, MPI_COMM_WORLD, err(5))
-    call MPI_Gather(send_vck%v1v2(),       1, MPI_REAL8,    v1v2(1),      1, MPI_REAL8,    root, MPI_COMM_WORLD, err(6))
+    call MPI_Gather(send_vck%num_sample(), 1, MPI_INTEGER8, num_sample(1), 1, MPI_INTEGER8, root, MPI_COMM_WORLD, err(1))
+    call MPI_Gather(send_vck%v1(),         1, MPI_REAL8,    v1(1),         1, MPI_REAL8,    root, MPI_COMM_WORLD, err(2))
+    call MPI_Gather(send_vck%v2(),         1, MPI_REAL8,    v2(1),         1, MPI_REAL8,    root, MPI_COMM_WORLD, err(3))
+    call MPI_Gather(send_vck%v1_square(),  1, MPI_REAL8,    v1_square(1),  1, MPI_REAL8,    root, MPI_COMM_WORLD, err(4))
+    call MPI_Gather(send_vck%v2_square(),  1, MPI_REAL8,    v2_square(1),  1, MPI_REAL8,    root, MPI_COMM_WORLD, err(5))
+    call MPI_Gather(send_vck%v1v2(),       1, MPI_REAL8,    v1v2(1),       1, MPI_REAL8,    root, MPI_COMM_WORLD, err(6))
     if (any(err(:) /= 0)) then
        if (present(ierr)) then
           ierr = 0
@@ -38,7 +38,7 @@ contains
     res_vck = send_vck
     do i = 1, num_proc
        if (i - 1 == root) cycle
-       call res_vck%merge_data(variance_covariance_kahan(n(i), v1(i), v2(i), v1_square(i), v2_square(i), v1v2(i)))
+       call res_vck%merge_data(variance_covariance_kahan(num_sample(i), v1(i), v2(i), v1_square(i), v2_square(i), v1v2(i)))
     end do
   end subroutine vck_mpi_gather
 end module mpi_variance_covariance_kahan_m
