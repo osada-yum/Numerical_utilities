@@ -64,11 +64,6 @@ contains
     res%s_ = -this%s_
     res%c_ = -this%c_
   end function negate_kahan_summation
-  pure type(kahan_summation) function sub_r64_ks(val, ks) result(res)
-    real(real64), intent(in) :: val
-    type(kahan_summation), intent(in) :: ks
-    res = val + (- ks)
-  end function sub_r64_ks
 
   pure real(real64) function kahan_babushka_sum(arr) result(res)
     real(real64), intent(in) :: arr(:)
