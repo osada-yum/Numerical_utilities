@@ -23,15 +23,15 @@ module variance_kahan_m
      procedure, pass :: sample_var => sample_var_vk
   end type variance_kahan
   interface variance_kahan
-     module procedure :: generate_variance_covariance_kahan
-     module procedure :: generate_variance_covariance_kahan_by_data
+     module procedure :: generate_variance_kahan
+     module procedure :: generate_variance_kahan_by_data
   end interface variance_kahan
 contains
-  pure type(variance_kahan) function generate_variance_covariance_kahan() result(res)
+  pure type(variance_kahan) function generate_variance_kahan() result(res)
     res%n_ = 0_int64
     res%v1_ = kahan_summation(0.0_real64)
     res%v1_square_ = kahan_summation(0.0_real64)
-  end function generate_variance_covariance_kahan
+  end function generate_variance_kahan
   pure subroutine add_data_vk(this, v1)
     class(variance_kahan), intent(inout) :: this
     real(real64), intent(in) :: v1
@@ -39,7 +39,7 @@ contains
     this%v1_ = this%v1_ + v1
     this%v1_square_ = this%v1_square_ + v1 ** 2
   end subroutine add_data_vk
-  pure type(variance_kahan) function generate_variance_covariance_kahan_by_data &
+  pure type(variance_kahan) function generate_variance_kahan_by_data &
        & (n, v1, v1_square) result(res)
     integer(int64), intent(in) :: n
     real(real64), intent(in) :: v1, v1_square
@@ -47,7 +47,7 @@ contains
     res%n_ = n
     res%v1_ = kahan_summation(v1)
     res%v1_square_ = kahan_summation(v1_square)
-  end function generate_variance_covariance_kahan_by_data
+  end function generate_variance_kahan_by_data
   pure subroutine merge_data_vk(this, other)
     class(variance_kahan), intent(inout) :: this
     type(variance_kahan), intent(in) :: other
