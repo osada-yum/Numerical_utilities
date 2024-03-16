@@ -31,7 +31,7 @@ contains
     res%s_ = val
     res%c_ = 0.0_real64
   end function generate_kahan_summation
-  pure real(real64) function val_kahan_summation(this) result(res)
+  pure elemental real(real64) function val_kahan_summation(this) result(res)
     class(kahan_summation), intent(in) :: this
     res = this%s_
   end function val_kahan_summation

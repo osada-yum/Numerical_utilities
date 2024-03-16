@@ -41,7 +41,7 @@ contains
        call res_vck%merge_data(variance_covariance_kahan(num_sample(i), v1(i), v2(i), v1_square(i), v2_square(i), v1v2(i)))
     end do
   end subroutine vck_mpi_gather
-  impure subroutine vck_mpi_multi_gather(n, send_vck, res_vck, root, myrank, num_proc, ierr)
+  impure subroutine vck_mpi_multi_sum(n, send_vck, res_vck, root, myrank, num_proc, ierr)
     integer(int32), intent(in) :: n
     type(variance_covariance_kahan), intent(in) :: send_vck(n)
     type(variance_covariance_kahan), intent(inout) :: res_vck(n)
@@ -108,5 +108,5 @@ contains
           end associate
        end do
     end do
-  end subroutine vck_mpi_multi_gather
+  end subroutine vck_mpi_multi_sum
 end module mpi_variance_covariance_kahan_m
